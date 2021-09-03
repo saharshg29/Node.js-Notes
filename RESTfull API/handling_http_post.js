@@ -1,4 +1,5 @@
 const express = require('express');
+const { parse } = require('path/posix');
 const app = express();
 
 app.use(express.json());
@@ -27,6 +28,21 @@ app.get('/api/course/:id', (req, res) => {
     if (!courses) res.status(404).send('The course with this ID could not be found')
     res.send(course);
 });
+
+app.delete('/api/courses/:id', (req, res) => {
+    // Look up the course 
+    // Not existing , return 404 (object not found)
+
+    const course = courses.find(c = > c.id === parseInt(req.params.id));
+    if (!course) res.status(404).send('The course with given id could not be found')
+
+    // Delete
+    const index = courses.indexOf(course);
+    courses.splice(index, 1);
+    res.send(courses)
+
+    // Return the same course
+})
 
 const port = process.env.PORT || 5000;
 
