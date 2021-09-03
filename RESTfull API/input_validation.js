@@ -5,9 +5,9 @@ const app = express();
 app.use(express.json());
 
 var courses = [
-    {id: 1, name: 'course1'},
-    {id: 2, name: 'course2'},
-    {id: 3, name: 'course3'}
+    { id: 1, name: 'course1' },
+    { id: 2, name: 'course2' },
+    { id: 3, name: 'course3' }
 ];
 
 app.get('/', (req, res) => {
@@ -19,9 +19,23 @@ app.get('/api/courses/', (req, res) => {
 })
 
 app.post('/api/courses', (req, res) => {
-    if (!req.body.name || req.body.name.length < 3) {
+    const schema = {
+        name: Joi.string().min(3).required()
+    };
+
+    const result = Joi.validate(req.body, schema);
+    console.log(result);
+
+    if (result.error) {
         // 400 is conventionally used for bad request
-        res.status(400).send('Name is required and should be minimum 3 charachters');
-        return; 
+        res.status(400).send(result.error.details[0].message('name is required'));
+        return;
     }
-})
+
+    const course = {
+        id: course.length + 1,
+        name: req.body.name
+    };
+    courses.push(course);
+    res.send(course);
+});
