@@ -33,7 +33,7 @@ app.delete('/api/courses/:id', (req, res) => {
     // Look up the course 
     // Not existing , return 404 (object not found)
 
-    const course = courses.find(c = > c.id === parseInt(req.params.id));
+    const course = courses.find(c => c.id === parseInt(req.params.id));
     if (!course) res.status(404).send('The course with given id could not be found')
 
     // Delete
