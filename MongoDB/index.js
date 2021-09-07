@@ -115,7 +115,7 @@ async function getCourses() {
 getCourses();
 */
 
-
+/*
 async function getCourses() {
 
     // Regular Expression in MongoDB
@@ -143,3 +143,43 @@ async function getCourses() {
 }
 
 getCourses();
+*/
+
+async function updateCourse(id) {
+    // Updating a document in mongoDB
+
+    // Approach: Query first
+    // findByID()
+    // Modify its properties
+    // save
+
+    const course = await Course.findById(id);
+    if (!course) return;
+    course.isPublished = true;
+    course.author = 'Another author';
+
+    const result = await course.save();
+    console.log(result);
+
+    // Approach: Update first
+    // Update: directly
+    // Optionally: get the updated document
+
+    course.set({
+        isPublished: true,
+        author: 'Another Author'
+    })
+    
+}
+
+updateCourse('613753f1dd0e111008c555a5');
+
+
+async function removeCourse(id,num) {
+    const result = await Course.deleteOne( { _id: id });
+    const course = await Course.findByIdAndRemove(num);
+    console.log(result);
+    console.log(course);
+}
+
+removeCourse('613754d890dce31464493f7f', '613755dae7a69b26c09f5a9f');
