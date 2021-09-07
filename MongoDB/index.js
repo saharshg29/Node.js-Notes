@@ -68,7 +68,7 @@ getCourses();
 /*
 async function getCourses() {
 
-    // Comparison operators for mongoDB or Mongoose
+    // Comparison operators for Mongoose
 
     // eq => equal
     // ne => not equal
