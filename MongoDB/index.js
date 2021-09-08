@@ -9,14 +9,28 @@ mongoose.connect('mongodb://localhost/playground')
     .then(() => console.log('Connection successfull '))
     .catch(err => console.error('Could not connect ot MongoDB..', err));
 
-/*
+
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 25
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['web', 'mobile', 'network']
+    },
     author: String,
     tags: [String],
     date: { type: Date, default: Date.now },
-    isPublished: Boolean
+    isPublished: Boolean,
+    price: {
+        type: Number,
+        required: true    
+    }
 });
 
 const Course = mongoose.model('Course', courseSchema);
@@ -174,23 +188,21 @@ updateCourse('613753f1dd0e111008c555a5');
 
 // removeCourse('613754d890dce31464493f7f', '613755dae7a69b26c09f5a9f');
 
-*/
-
-const courseSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    author: String,
-    tags: [String],
-    date: {
-        type: Date, default: Date.now
-    },
-    isPublished: Boolean,
-    pirce: Number
-});
+// const courseSchema = new mongoose.Schema({
+//     name: { type: String, required: true },
+//     author: String,
+//     tags: [String],
+//     date: {
+//         type: Date, default: Date.now
+//     },
+//     isPublished: Boolean,
+//     pirce: Number
+// });
 
 async function createCourse() {
     const course = new Course({
-        name:'Python',
-        author:'Sahatsh',
+        name: 'Python',
+        author: 'Sahatsh',
         tags: ['python', 'django'],
         isPublished: true,
         price: 15
@@ -203,7 +215,7 @@ async function createCourse() {
     catch (ex) {
         console.log(ex.messaeg);
     }
-    
+
 }
 
 createCourse();
