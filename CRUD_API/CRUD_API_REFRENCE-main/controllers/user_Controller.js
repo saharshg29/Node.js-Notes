@@ -27,7 +27,7 @@ class userData
 
     async get_data(req,res)
     {
-      var data=await User_Data.find()
+      var data=await User_Data.find(    )
             console.log("getData",data)
             return res.status(200).json({ data: data });
     

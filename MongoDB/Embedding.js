@@ -38,5 +38,18 @@ async function updateAuthor( courseID ) {
     course.save();
 }
 
+async function addAuthor(courseID, author) {
+    const course = await Course.findById(courseID);
+    course.authors.push(author);
+    course.save();
+}
+
+async function removeAuthor(courseID, authorID) {
+    const course = await Course.findById(courseID);
+    const author = course.authors.id(authorID);
+    author.remove();
+    course.save();
+}
 // createCourse('Node Course', new Author({name: 'Saharsh'})); 
-updateAuthor('6139fcc76e348ecbe4e98ceb');
+// updateAuthor('6139fcc76e348ecbe4e98ceb');
+// removeAuthor(/*'CourseID', 'authorID'*/)

@@ -7,7 +7,6 @@ const express = require('express');
 const router = express.Router();
 const app = express();
 const mongoose = require('mongoose')
-const helmet = require('helmet');
 
 // const debug = require('debug')('app:startup');
 // const config = require('config');
@@ -22,8 +21,6 @@ const helmet = require('helmet');
 
 // app.set('view engine', 'pug');
 
-app.use(express.json());
-app.use(helmet());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static('public'));
 app.use('/api/courses', genres);
@@ -40,26 +37,17 @@ var genres = [
     {id: 1, genre: 'Science Fiction'}
 ];
 
-router.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.send(genres);
 });
 
-router.get('/', (req, res) => {
-    console.log('Welcome to the world of VIDLY.');
-    res.send('Hello World!');
-});
-
-router.get('/', (req, res) => {
-    res.send(genres);
-});
-
-router.get('/:id', (req, res) => {
+app.get('/:id', (req, res) => {
     const genre = genres.find(g => g.id === parseInt(req.params.id));
     if (!genre) return res.status(404).send('Given genre does not exist');
     res.send(genre)
 });
 
-router.post('/', (req,res) => {
+app.post('/', (req,res) => {
     const { error } = validateGenre(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
@@ -71,7 +59,7 @@ router.post('/', (req,res) => {
     res.send(genre);
 });
 
-router.put('/:id', (req, res) => {
+app.put('/:id', (req, res) => {
     const genre = genres.find(c => c.id === parseInt(req.params.id));
     if (!genre) return res.status(404).send('The genre with given id could not be found.');
 
@@ -82,7 +70,7 @@ router.put('/:id', (req, res) => {
     res.send(genre);
 });
 
-router.delete('/:id', (req, res) => {
+app.delete('/:id', (req, res) => {
     const genre = genres.find(g => g.id === parseInt(req.params.id));
     if(!genre) return res.status(404).send('Given genre could not be found')
 
