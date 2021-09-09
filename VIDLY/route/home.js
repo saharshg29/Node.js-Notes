@@ -1,8 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router;
+const app = express();
 
 router.get('/', (req, res) => {
-    res.render('index', {title: 'My express App', message: 'Hello'});
-});
+    res.send('Hello world');
+    console.log('connected successfully')
+})
 
-module.exports = router;
+app.listen(3000, () => 'listenin on port 3000');
+
