@@ -1,5 +1,5 @@
 const express = require('express');
-const { parse } = require('path/posix');
+// const { parse } = require('path/posix');
 const app = express();
 
 app.use(express.json());
