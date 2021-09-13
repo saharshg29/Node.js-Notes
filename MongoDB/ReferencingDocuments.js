@@ -1,21 +1,17 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/learning')
-    .then(() => console.log('Connected to mongoDB....'))
-    .catch(err => console.log('Could not connect to mongoose'));
+mongoose.connect('mongodb://localhost/Referencing')
+    .then(() => console.log('Connected Sucessfully to mongoDB'))
+    .catch(err => console.error(err));
 
 const Author = mongoose.model('Author', new mongoose.Schema({
     name: String,
     bio: String,
-    mobile: Number
+    websit: String
 }));
 
 const Course = mongoose.model('Course', new mongoose.Schema({
-    name: String,
-    // auhtor: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Author'
-    // }
+    name: String
 }));
 
 async function createAuthor(name, bio, website) {
@@ -34,6 +30,7 @@ async function createCourse(name, author) {
         name,
         author
     });
+
     const result = await course.save();
     console.log(result);
 }
@@ -41,14 +38,12 @@ async function createCourse(name, author) {
 async function listCourse() {
     const courses = await Course
         .find()
-        // .populate('Author')
-        // .select('name');
-    console.log(courses);
+        .select('name');
+    console.log(courses)
 }
 
-// createAuthor('Mosh', 'My bio', 'My website');
+// createAuthor('Saharsh', 'My bio', 'my website');
 
-// createCourse('Node Course', '6139f229f08d35de52b085ad')
+// createCourse('Node Course', 'authorID');
 
 listCourse();
-
